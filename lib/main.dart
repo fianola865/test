@@ -6,7 +6,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   @override
-   Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: HomePage(),
@@ -60,14 +60,59 @@ class HomePage extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.pop(context); 
+        leading: Builder(
+          builder: (context) {
+            return IconButton(
+              icon: Icon(Icons.menu), // Ikon hamburger
+              onPressed: () {
+                Scaffold.of(context).openDrawer(); // Membuka drawer
+              },
+            );
           },
         ),
-        backgroundColor: Colors.white, 
-        foregroundColor: Colors.black, 
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+      ),
+      drawer: Drawer( // Drawer yang dapat dibuka
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+              ),
+            ),
+            ExpansionTile(
+              title: Text("Paket Dekor"),
+              children: [
+                ListTile(
+                  title: Text("Paket Makeup"),
+                ),
+              ],
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pop(context); // Menutup drawer
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () {
+                Navigator.pop(context); // Menutup drawer
+              },
+            ),
+          ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -83,107 +128,107 @@ class HomePage extends StatelessWidget {
             return Card(
               color: Color.fromARGB(255, 254, 234, 199),
               child: Container(
-              padding: EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: Image.asset('assets/images/R.jpeg',
-                        height: 25,
-                        width: 25,
-                        fit: BoxFit.cover,
-                        ),
-                      ),
-                      SizedBox(width: 6),
-                      Text("Decoration vanue",
-                      style: TextStyle(
-                        fontSize: 10,
-                      ),
-                      ),
-                      SizedBox(width: 6),
-                      CircleAvatar(
-                        backgroundColor: Colors.blue,
-                        radius: 10,
-                        child: Icon(Icons.check, color: Colors.white, size: 10),
-                      )
-                    ],
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: 
-                    Image.asset(
-                      data[index]['image']!,
-                      height: 115,
-                      width: 115,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Row(
                       children: [
-                        Text(
-                          data[index]['title']!,
-                          style: TextStyle(
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.asset(
+                            'assets/images/R.jpeg',
+                            height: 25,
+                            width: 25,
+                            fit: BoxFit.cover,
                           ),
                         ),
-                        SizedBox(height: 5),
-                        Row(
-                          children: [
-                            Text(
-                              data[index]['harga']!,
-                              style: TextStyle(
-                                fontSize: 9,
-                                color: Colors.red
-                              ),
-                            ),
-                            SizedBox(width: 7),
-                            Text(
-                              data[index]['hargaa']!,
-                              style: TextStyle(
-                                decoration: TextDecoration.lineThrough,
-                                fontSize: 7,
-                              ),
-                            ),
-                          ]
+                        SizedBox(width: 6),
+                        Text("Decoration vanue",
+                          style: TextStyle(
+                            fontSize: 10,
+                          ),
                         ),
-                        SizedBox(height: 6),
-                        Row(
-                          children: [
-                            Icon(Icons.star, color: Colors.orange, size: 16),
-                            SizedBox(width: 4), 
-                            Text(data[index]['rating']!,
-                            style: TextStyle(
-                              fontSize: 10
-                            ),
-                            ),
-                            SizedBox(width: 20),
-                            Icon(Icons.visibility,size: 20),
-                            SizedBox(width: 4), 
-                            Text(data[index]['view']!,
-                            style: TextStyle(
-                              fontSize: 10
-                            ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 4),
-                        Row(
-                          children: [
-                            SizedBox(width: 100),
-                            Icon(Icons.bookmark_border, size: 20),
-                          ],
+                        SizedBox(width: 6),
+                        CircleAvatar(
+                          backgroundColor: Colors.blue,
+                          radius: 10,
+                          child: Icon(Icons.check, color: Colors.white, size: 10),
                         )
                       ],
                     ),
-                  ),
-                ],
-              ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(15),
+                      child: Image.asset(
+                        data[index]['image']!,
+                        height: 115,
+                        width: 115,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            data[index]['title']!,
+                            style: TextStyle(
+                              fontSize: 11,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Text(
+                                data[index]['harga']!,
+                                style: TextStyle(
+                                  fontSize: 9,
+                                  color: Colors.red
+                                ),
+                              ),
+                              SizedBox(width: 7),
+                              Text(
+                                data[index]['hargaa']!,
+                                style: TextStyle(
+                                  decoration: TextDecoration.lineThrough,
+                                  fontSize: 7,
+                                ),
+                              ),
+                            ]
+                          ),
+                          SizedBox(height: 6),
+                          Row(
+                            children: [
+                              Icon(Icons.star, color: Colors.orange, size: 16),
+                              SizedBox(width: 4), 
+                              Text(data[index]['rating']!,
+                                style: TextStyle(
+                                  fontSize: 10
+                                ),
+                              ),
+                              SizedBox(width: 20),
+                              Icon(Icons.visibility, size: 20),
+                              SizedBox(width: 4), 
+                              Text(data[index]['view']!,
+                                style: TextStyle(
+                                  fontSize: 10
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 4),
+                          Row(
+                            children: [
+                              SizedBox(width: 100),
+                              Icon(Icons.bookmark_border, size: 20),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             );
           },
